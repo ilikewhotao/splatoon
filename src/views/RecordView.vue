@@ -116,6 +116,9 @@ function selectUser(value: string) {
         ...item
       }
     })
+    .sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
+    })
 }
 
 const showModal = ref(false)
