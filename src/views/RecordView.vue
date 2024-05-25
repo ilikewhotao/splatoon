@@ -55,7 +55,7 @@ async function getJson(url: string) {
 
 async function getUser() {
   if (users.value.length === 0) {
-    const data = await getJson('./public/json/user.json')
+    const data = await getJson('./json/user.json')
     userStore.setUsers(data)
   }
 }

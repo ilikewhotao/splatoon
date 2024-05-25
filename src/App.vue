@@ -5,6 +5,7 @@ import HomeView from '@/views/HomeView.vue'
 import UserView from '@/views/UserView.vue'
 import RecordView from '@/views/RecordView.vue'
 import ResultView from '@/views/ResultView.vue'
+import DataView from '@/views/DataView.vue'
 
 const tabs = ref([
   {
