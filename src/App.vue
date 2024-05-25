@@ -4,6 +4,7 @@ import { zhCN, dateZhCN } from 'naive-ui'
 import HomeView from '@/views/HomeView.vue'
 import UserView from '@/views/UserView.vue'
 import RecordView from '@/views/RecordView.vue'
+import ResultView from '@/views/ResultView.vue'
 
 const tabs = ref([
   {
@@ -24,7 +25,7 @@ const tabs = ref([
   {
     name: 'result',
     title: '结果公示',
-    components: shallowRef(RecordView)
+    components: shallowRef(ResultView)
   }
 ])
 const currentTab = ref('home')

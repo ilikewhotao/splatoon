@@ -16,7 +16,7 @@ type User = {
 
 const createColumns = (): DataTableColumns<User> => {
   return [
-    { title: '玩家名称🐟昵称', key: 'name' },
+    { title: '玩家名称&昵称', key: 'name' },
     { title: 'SW', key: 'sw' }
   ]
 }
