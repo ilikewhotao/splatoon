@@ -55,14 +55,14 @@ async function getJson(url: string) {
 
 async function getUser() {
   if (users.value.length === 0) {
-    const data = await getJson('/json/user.json')
+    const data = await getJson('../../public/json/user.json')
     userStore.setUsers(data)
   }
 }
 
 async function getRecord() {
   if (records.value.length === 0) {
-    const data = await getJson('/json/record.json')
+    const data = await getJson('../../public/json/record.json')
     setTimeout(() => {
       recordStore.setRecords(data)
     }, 1000)

@@ -33,9 +33,9 @@ const filterUsers = computed(() => {
   })
 })
 
-async function requestUser() {
+async function getJson(url: string) {
   return await axios
-    .get('/json/user.json')
+    .get(url)
     .then(function (response) {
       // 处理成功情况
       return response.data
@@ -52,7 +52,7 @@ async function requestUser() {
 async function getUser() {
   if (users.value.length === 0) {
     loading.value = true
-    const data = await requestUser()
+    const data = await getJson('../../public/json/user.json')
     setTimeout(() => {
       loading.value = false
       userStore.setUsers(data)
