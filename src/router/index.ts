@@ -11,22 +11,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/user',
       name: 'user',
-      component: () => import('../views/UserView.vue')
+      component: () => import('@/views/UserView.vue')
     },
     {
       path: '/record',
       name: 'record',
-      component: () => import('../views/RecordView.vue')
+      component: () => import('@/views/RecordView.vue')
     },
     {
       path: '/result',
       name: 'result',
-      component: () => import('../views/ResultView.vue')
+      component: () => import('@/views/ResultView.vue')
     }
   ]
 })
