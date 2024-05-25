@@ -1,50 +1,44 @@
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user'
 import axios from 'axios'
 import type { DataTableColumns } from 'naive-ui'
+import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
+
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
 
 type User = {
   sw: string
-  name: string
+  username: string
   nickname: string
 }
 
 const createColumns = (): DataTableColumns<User> => {
   return [
-    {
-      title: '玩家名称',
-      key: 'name'
-    },
-    {
-      title: 'SW',
-      key: 'sw'
-    }
+    { title: '玩家名称🐟昵称', key: 'name' },
+    { title: 'SW', key: 'sw' }
   ]
 }
 const columns = createColumns()
-
+const loading = ref(false)
 const emojis = ['🦑', '🐙']
-const users = ref<User[]>([])
-const loading = ref(true)
-const userData = computed(() => {
+const filterUsers = computed(() => {
   return users.value.map(item => {
     const emoji = emojis[Math.floor(Math.random() * 2)]
     return {
       sw: item.sw,
-      name: item.name + (item.nickname ? ` ${emoji + item.nickname}` : '')
+      name: item.username + (item.nickname ? ` ${emoji + item.nickname}` : '')
     }
   })
 })
 
-function getUser() {
-  axios
-    .get('/splatoon/public/json/user.json')
+async function requestUser() {
+  return await axios
+    .get('/json/user.json')
     .then(function (response) {
       // 处理成功情况
-      setTimeout(() => {
-        loading.value = false
-        users.value = response.data
-      }, 1000)
+      return response.data
     })
     .catch(function (error) {
       // 处理错误情况
@@ -53,6 +47,17 @@ function getUser() {
     .finally(function () {
       // 总是会执行
     })
+}
+
+async function getUser() {
+  if (users.value.length === 0) {
+    loading.value = true
+    const data = await requestUser()
+    setTimeout(() => {
+      loading.value = false
+      userStore.setUsers(data)
+    }, 1000)
+  }
 }
 getUser()
 </script>
@@ -63,13 +68,13 @@ getUser()
   </n-alert>
   <n-p>
     参赛人数：<n-text style="font-size: 24px">{{
-      users.length || '--'
+      filterUsers.length || '--'
     }}</n-text>
   </n-p>
   <n-data-table
     :loading="loading"
     :columns="columns"
-    :data="userData"
+    :data="filterUsers"
     :bordered="false"
     :single-line="false"
     :scroll-x="400"
