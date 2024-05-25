@@ -1,4 +1,4 @@
-import{c as v,k as r,e as C,u as b,f as l,g as a,h as x,i as z,t as y}from"./index-BXvMRnqU.js";const T=v("p",`
+import{c as v,k as r,e as C,u as b,f as l,g as a,h as x,i as z,t as y}from"./index-rMr_1vKx.js";const T=v("p",`
  box-sizing: border-box;
  transition: color .3s var(--n-bezier);
  margin: var(--n-margin);

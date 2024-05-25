@@ -8,9 +8,8 @@ import {
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/', redirect: '/home' },
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: () => import('@/views/HomeView.vue')
     },

@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <n-h1>斯普拉遁3 🏆小白杯</n-h1>
   <n-h3 prefix="bar"> 报名流程 </n-h3>
