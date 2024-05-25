@@ -61,7 +61,7 @@ function updateValue(value: string) {
   options.value = []
   if (userData.value.length === 0) {
     axios
-      .get('/dist/public/json/user.json')
+      .get('/splatoon/dist/public/json/user.json')
       .then(function (response) {
         userData.value = response.data
         searchUser(value)
@@ -97,7 +97,7 @@ function searchRecord(value: string) {
 function selectValue(value: string) {
   if (recordData.value.length === 0) {
     axios
-      .get('/dist/public/json/record.json')
+      .get('/splatoon/dist/public/json/record.json')
       .then(function (response) {
         recordData.value = response.data
 

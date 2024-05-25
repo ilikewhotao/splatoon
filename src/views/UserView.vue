@@ -38,7 +38,7 @@ const userData = computed(() => {
 
 function getUser() {
   axios
-    .get('/dist/public/json/user.json')
+    .get('/splatoon/dist/public/json/user.json')
     .then(function (response) {
       // 处理成功情况
       setTimeout(() => {
