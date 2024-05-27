@@ -76,6 +76,14 @@ const userToSW = (searchUserValue: string) => {
   )
 }
 
+const formatScore = (score: number | undefined) => {
+  let scoreStr = score?.toString()
+  if (!scoreStr?.includes('.')) {
+    scoreStr += '.0'
+  }
+  return scoreStr + '%'
+}
+
 function updateUser(value: string) {
   options.value = users.value
     .filter(
@@ -181,7 +189,7 @@ getRecord()
   >
     <n-h3 style="display: flex; justify-content: space-between">
       <n-text type="success">WIN!</n-text>
-      <n-text type="success">{{ showRecord?.win.score }}%</n-text>
+      <n-text type="success">{{ formatScore(showRecord?.win.score) }}</n-text>
     </n-h3>
     <n-list bordered>
       <n-list-item v-for="sw in showRecord?.win.sw">
@@ -193,7 +201,7 @@ getRecord()
 
     <n-h3 style="display: flex; justify-content: space-between">
       <n-text type="error">LOSE...</n-text>
-      <n-text type="error">{{ showRecord?.lose.score }}%</n-text>
+      <n-text type="error">{{ formatScore(showRecord?.lose.score) }}</n-text>
     </n-h3>
     <n-list bordered>
       <n-list-item v-for="sw in showRecord?.lose.sw">
