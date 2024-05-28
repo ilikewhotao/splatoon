@@ -52,7 +52,7 @@ async function getJson(url: string) {
 async function getUser() {
   if (users.value.length === 0) {
     loading.value = true
-    const data = await getJson('./json/user.json')
+    const data = await getJson('./json/user.json?t=' + new Date().getTime())
     setTimeout(() => {
       loading.value = false
       userStore.setUsers(data)
