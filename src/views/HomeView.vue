@@ -48,13 +48,6 @@ import { ref } from 'vue'
   <n-h3 prefix="bar"> 活动奖励 </n-h3>
   <n-p>本活动由小白独家赞助💰</n-p>
   <n-p>本次活动第一名可以获得《斯普拉遁3》amiibo手办任选一个</n-p>
-  <div style="max-width: 750px; margin: 0px auto">
-    <img
-      src="https://img2.imgtp.com/2024/05/23/9kGGvZ01.jpg"
-      alt=""
-      style="display: block; width: 100%"
-    />
-  </div>
 </template>
 
 <style scoped></style>
