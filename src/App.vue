@@ -26,7 +26,7 @@ const tabs = ref([
   {
     name: 'result',
     title: '结果公示',
-    components: shallowRef(ResultView)
+    components: shallowRef(DataView)
   }
 ])
 const currentTab = ref('home')
