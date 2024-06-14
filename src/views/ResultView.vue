@@ -38,7 +38,7 @@ const userToSW = (searchUserValue: string) => {
 const createColumns = (): DataTableColumns<User> => {
   return [
     { title: '玩家名称&昵称', key: 'name' },
-    { title: '最终可能得分区间', key: 'scores' }
+    { title: '胜率&得分区间', key: 'scores' }
   ]
 }
 const columns = createColumns()
@@ -63,7 +63,7 @@ const filterUsers = computed(() => {
       })
 
     const length = filterRecords.length
-    
+
     const win = filterRecords.filter(v => v?.status === 'win').length
     const lose = length - win
 
@@ -71,7 +71,7 @@ const filterUsers = computed(() => {
     let min = 20 - 2 * lose
     max = max > 20 ? 20 : max
     min = min < -20 ? -20 : min
-  
+
     let scores: number | string = ''
 
     if (length <= 20) {
@@ -79,8 +79,12 @@ const filterUsers = computed(() => {
     } else {
       scores = min + ' ~ ' + max
     }
+
+
+    const bi = length === 0 ? 0 : win / length
+
     return {
-      scores: scores,
+      scores: `（${Math.floor(bi * 100)}%）${scores}`,
       name: item.username + (item.nickname ? ` ${emoji + item.nickname}` : '')
     }
   })
