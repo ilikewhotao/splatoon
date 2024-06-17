@@ -136,7 +136,7 @@ const filterRecord = () => {
         )
       return {
         sw: item.sw,
-        bi: Math.floor((win / length) * 100),
+        bi: length ? Math.floor((win / length) * 100) : 0,
         score: score,
         records: resultRecords,
         name: item.username + (item.nickname ? ` ${emoji + item.nickname}` : '')
