@@ -46,8 +46,6 @@ const loading = ref(false)
 const emojis = ['🦑', '🐙']
 const resultRecord = ref<{ scores: number; name: string }[]>([])
 const filterUsers = () => {
-
-  
   resultRecord.value = users.value
     .map(item => {
       const emoji = emojis[Math.floor(Math.random() * 2)]
@@ -83,7 +81,7 @@ const filterUsers = () => {
       } else {
         let newArrry = []
         for (let i = 0; i < 20; i++) {
-          const index = Math.floor(Math.random() * length)
+          const index = Math.floor(Math.random() * (length - i))
           newArrry.push(filterRecords[index])
           filterRecords.splice(index, 1)
         }
@@ -134,7 +132,6 @@ async function getRecord() {
     const data = await getJson('./json/record.json?t=' + new Date().getTime())
     recordStore.setRecords(data)
     await getUser()
-
   }
 }
 
