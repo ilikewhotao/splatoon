@@ -2,7 +2,7 @@
 import { useRecordStore } from '@/stores/record'
 import { useUserStore } from '@/stores/user'
 import axios from 'axios'
-import { NA, type DataTableColumns } from 'naive-ui'
+import { NA, type DataTableColumns, type DataTableInst } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { computed, ref, h } from 'vue'
 
@@ -50,7 +50,7 @@ const createColumns = ({
     { title: '玩家名称&昵称', key: 'name' },
     {
       title: '总胜率&得分',
-      key: 'scores',
+      key: 'score',
       render(row) {
         return h(
           NA,
@@ -180,13 +180,27 @@ async function getRecord() {
   filterRecord()
 }
 
+const tableRef = ref<DataTableInst>()
+
+const exportSorterAndFilterCsv = () =>
+  tableRef.value?.downloadCsv({
+    fileName: '第一届小白杯比赛结果',
+    keepOriginalData: true
+  })
+
 getRecord()
 </script>
 
 <template>
-  <n-button type="primary" @click="filterRecord">重新模拟结果</n-button>
+  <n-space>
+    <n-button type="primary" @click="filterRecord">重新模拟结果</n-button>
+
+    <n-button @click="exportSorterAndFilterCsv"> 导出结果 </n-button>
+  </n-space>
+
   <n-p>以下结果为模拟结果，不代表最终结果：</n-p>
   <n-data-table
+    ref="tableRef"
     :loading="loading"
     :columns="columns"
     :data="resultRecord"
