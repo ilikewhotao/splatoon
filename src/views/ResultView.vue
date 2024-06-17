@@ -44,51 +44,62 @@ const createColumns = (): DataTableColumns<User> => {
 const columns = createColumns()
 const loading = ref(false)
 const emojis = ['🦑', '🐙']
-const filterUsers = computed(() => {
-  return users.value.map(item => {
-    const emoji = emojis[Math.floor(Math.random() * 2)]
-    const filterRecords = records.value
-      .filter((i: Record) => {
-        return (
-          i.win.sw.includes(userToSW(item.sw)) ||
-          i.lose.sw.includes(userToSW(item.sw))
-        )
-      })
-      .map((i: Record) => {
-        return {
-          sw: userToSW(item.sw),
-          status: i.win.sw.includes(userToSW(item.sw)) ? 'win' : 'lose',
-          ...i
+const resultRecord = ref<{ scores: number; name: string }[]>([])
+const filterUsers = () => {
+
+  
+  resultRecord.value = users.value
+    .map(item => {
+      const emoji = emojis[Math.floor(Math.random() * 2)]
+      const filterRecords = records.value
+        .filter((i: Record) => {
+          return (
+            i.win.sw.includes(userToSW(item.sw)) ||
+            i.lose.sw.includes(userToSW(item.sw))
+          )
+        })
+        .map((i: Record) => {
+          return {
+            sw: userToSW(item.sw),
+            status: i.win.sw.includes(userToSW(item.sw)) ? 'win' : 'lose',
+            ...i
+          }
+        })
+
+      const length = filterRecords.length
+
+      const win = filterRecords.filter(v => v?.status === 'win').length
+      const lose = length - win
+
+      let max = 2 * win - 20
+      let min = 20 - 2 * lose
+      max = max > 20 ? 20 : max
+      min = min < -20 ? -20 : min
+
+      let scores: number = 0
+
+      if (length <= 20) {
+        scores = 2 * win - 20
+      } else {
+        let newArrry = []
+        for (let i = 0; i < 20; i++) {
+          const index = Math.floor(Math.random() * length)
+          newArrry.push(filterRecords[index])
+          filterRecords.splice(index, 1)
         }
-      })
 
-    const length = filterRecords.length
+        scores = newArrry.filter(v => v?.status === 'win').length * 2 - 20
+      }
 
-    const win = filterRecords.filter(v => v?.status === 'win').length
-    const lose = length - win
+      const bi = length === 0 ? 0 : win / length
 
-    let max = 2 * win - 20
-    let min = 20 - 2 * lose
-    max = max > 20 ? 20 : max
-    min = min < -20 ? -20 : min
-
-    let scores: number | string = ''
-
-    if (length <= 20) {
-      scores = 2 * win - 20
-    } else {
-      scores = min + ' ~ ' + max
-    }
-
-
-    const bi = length === 0 ? 0 : win / length
-
-    return {
-      scores: `（${Math.floor(bi * 100)}%）${scores}`,
-      name: item.username + (item.nickname ? ` ${emoji + item.nickname}` : '')
-    }
-  })
-})
+      return {
+        scores: scores,
+        name: item.username + (item.nickname ? ` ${emoji + item.nickname}` : '')
+      }
+    })
+    .sort((a, b) => b.scores - a.scores)
+}
 
 async function getJson(url: string) {
   return await axios
@@ -113,6 +124,7 @@ async function getUser() {
     setTimeout(() => {
       loading.value = false
       userStore.setUsers(data)
+      filterUsers()
     }, 1000)
   }
 }
@@ -121,7 +133,8 @@ async function getRecord() {
   if (records.value.length === 0) {
     const data = await getJson('./json/record.json?t=' + new Date().getTime())
     recordStore.setRecords(data)
-    getUser()
+    await getUser()
+
   }
 }
 
@@ -129,10 +142,12 @@ getRecord()
 </script>
 
 <template>
+  <n-button type="primary" @click="filterUsers">模拟结果</n-button>
+  <n-p>以下结果为模拟结果，不代表最终结果：</n-p>
   <n-data-table
     :loading="loading"
     :columns="columns"
-    :data="filterUsers"
+    :data="resultRecord"
     :bordered="false"
     :single-line="false"
   />
