@@ -182,7 +182,7 @@ getRecord()
 </script>
 
 <template>
-  <n-button type="primary" @click="filterRecord">模拟结果</n-button>
+  <n-button type="primary" @click="filterRecord">重新模拟结果</n-button>
   <n-p>以下结果为模拟结果，不代表最终结果：</n-p>
   <n-data-table
     :loading="loading"
