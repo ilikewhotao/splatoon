@@ -15,6 +15,7 @@ type Table = {
   sw: string
   name: string
   score: number
+  bi: number
   records: {
     datetime: string
     status: string
@@ -48,7 +49,7 @@ const createColumns = ({
   return [
     { title: '玩家名称&昵称', key: 'name' },
     {
-      title: '胜率&得分区间',
+      title: '总胜率&得分',
       key: 'scores',
       render(row) {
         return h(
@@ -60,7 +61,7 @@ const createColumns = ({
             onClick: () => openModal(row)
           },
           {
-            default: () => row.score + '分'
+            default: () => '[' + row.bi + '%]' + row.score + '分'
           }
         )
       }
@@ -135,6 +136,7 @@ const filterRecord = () => {
         )
       return {
         sw: item.sw,
+        bi: Math.floor((win / length) * 100),
         score: score,
         records: resultRecords,
         name: item.username + (item.nickname ? ` ${emoji + item.nickname}` : '')
