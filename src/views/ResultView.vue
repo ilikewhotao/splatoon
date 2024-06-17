@@ -60,7 +60,7 @@ const createColumns = ({
             onClick: () => openModal(row)
           },
           {
-            default: () => row.score
+            default: () => row.score + '分'
           }
         )
       }
@@ -196,7 +196,7 @@ getRecord()
     style="width: 80%; max-width: 750px"
     v-model:show="showModal"
     preset="card"
-    title="对战战绩"
+    title="抽取战绩"
     :bordered="false"
   >
     <n-list bordered>
